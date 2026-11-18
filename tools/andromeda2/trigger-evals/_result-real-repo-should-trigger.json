@@ -1,0 +1,216 @@
+[
+ {
+  "skill": "andromeda2-ad-copy",
+  "query": "write the primary text, headline and description for our winning UGC video for a heated eye mask (sleep + migraine relief vibe), CPA target $30",
+  "invoked": [
+   "andromeda2-ad-copy"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-ad-copy",
+  "query": "our CTR is 0.6% but hook rate is 38%, can you rewrite the ad copy under the video? product is a dog anxiety vest",
+  "invoked": [
+   "andromeda2-ad-copy"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-ad-copy",
+  "query": "need 5 variations of facebook ad captions for a black friday 40% off sale on our skincare bundle",
+  "invoked": [
+   "andromeda2-ad-copy"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-core",
+  "query": "since meta rolled out the new andromeda thing our ROAS fell off a cliff, what does andromeda actually reward now and what should we change in how we make ads?",
+  "invoked": [
+   "andromeda2-core"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-core",
+  "query": "can you build proper customer avatars for our menopause sleep supplement? we sell to women 45-60 but i feel like that's too broad for meta now",
+  "invoked": [
+   "andromeda2-core"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-core",
+  "query": "audit our facebook ads account, we spend 40k/mo on a hair growth serum and nothing new is winning. i can export whatever you need from ads manager",
+  "invoked": [
+   "andromeda2-core"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-creative-iteration",
+  "query": "here's our ads export, which ads are winning and what should we make next week? give me iterations and new concepts",
+  "invoked": [
+   "andromeda2-creative-iteration"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-creative-iteration",
+  "query": "our best video has been running 6 weeks and frequency is creeping up, what variations should we make before it dies?",
+  "invoked": [
+   "andromeda2-creative-iteration"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-creative-iteration",
+  "query": "why is this ad winning and how do we make more like it? it's a hands-demo video for a knee brace",
+  "invoked": [
+   "andromeda2-creative-iteration"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-hard-scaling",
+  "query": "we spend about $70k/day on meta, our cost cap campaigns spend full budget but CPA is 20% above the cap, what do we do?",
+  "invoked": [
+   "andromeda2-hard-scaling"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-hard-scaling",
+  "query": "set up bid caps and ROAS goals for a $1.5M/month account, what values and budgets?",
+  "invoked": [
+   "andromeda2-hard-scaling"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-hard-scaling",
+  "query": "how do the biggest brands structure accounts at $100k+/day with cost caps and value rules?",
+  "invoked": [
+   "andromeda2-hard-scaling"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-launch-testing",
+  "query": "we have 15 new creatives for 3 avatars and $250/day, how should we set up the campaign to test them and when do we turn ads off?",
+  "invoked": [
+   "andromeda2-launch-testing"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-launch-testing",
+  "query": "CBO or ABO for creative testing in 2026? how many ads per ad set and should we set minimum budgets?",
+  "invoked": [
+   "andromeda2-launch-testing"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-launch-testing",
+  "query": "relaunching our meta account after 3 months off, AOV $64, COGS 28%, what's the structure and how many ads do we launch per week",
+  "invoked": [
+   "andromeda2-launch-testing"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-scaling",
+  "query": "our prospecting campaign is at $1,500/day and ROAS is 2.8 vs 2.2 target for the last 2 weeks, how do we scale to $5k/day without killing it?",
+  "invoked": [
+   "andromeda2-scaling"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-scaling",
+  "query": "we raised budget 50% and ROAS dropped from 3.1 to 2.4 in 3 days, should we cut back?",
+  "invoked": [
+   "andromeda2-scaling"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-scaling",
+  "query": "should we duplicate our winning campaign or make a separate scale campaign to spend more?",
+  "invoked": [
+   "andromeda2-scaling"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-static-ads",
+  "query": "make 8 static image ads for our collagen coffee creamer, different angles, with the text on each image and AI image prompts",
+  "invoked": [
+   "andromeda2-static-ads"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-static-ads",
+  "query": "turn our winning UGC video into statics, we want us-vs-them, review cards and a native post style",
+  "invoked": [
+   "andromeda2-static-ads"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-static-ads",
+  "query": "we need black friday image ads with the offer, back in stock ads and a few objection-killer statics for retargeting",
+  "invoked": [
+   "andromeda2-static-ads"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-video-scripts",
+  "query": "write a UGC tiktok-style script for our knee massager, 30 seconds, hook in the first 2 seconds, give me alt hooks too",
+  "invoked": [],
+  "hit": false
+ },
+ {
+  "skill": "andromeda2-video-scripts",
+  "query": "our reels ads have a 12% hold rate, rewrite the script so people keep watching. it's a 60s founder video for a teeth whitening pen",
+  "invoked": [
+   "andromeda2-video-scripts"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-video-scripts",
+  "query": "i need a creator brief and shot list for a street interview ad about our hydration powder",
+  "invoked": [
+   "andromeda2-video-scripts"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-zombie-campaigns",
+  "query": "we have like 400 paused ads from the last 2 years, some were winners, is there a way to get money out of them again?",
+  "invoked": [
+   "andromeda2-zombie-campaigns"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-zombie-campaigns",
+  "query": "what's a zombie campaign on facebook and how do I set one up?",
+  "invoked": [
+   "andromeda2-zombie-campaigns"
+  ],
+  "hit": true
+ },
+ {
+  "skill": "andromeda2-zombie-campaigns",
+  "query": "our old winning campaign stopped working, how do we make old winners work again?",
+  "invoked": [
+   "andromeda2-zombie-campaigns"
+  ],
+  "hit": true
+ }
+]

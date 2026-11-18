@@ -46,7 +46,22 @@ belong to a sibling. Run with skill-creator's `run_eval.py` (1 run per query, So
 environment with **395 other skills** listed — including generic `ad-copy`, `tiktok-ad-script`, `video-script`,
 `facebook-ad-campaign` and persona skills that compete for the same requests.
 
-TRIGGER_RESULTS
+**Result 1 — skill-creator harness** (temporary slash command injected beside 395 skills): recall 4/27 with the first
+descriptions and still 4/27 after front-loading them, specificity 26/27 → 27/27. Unchanged recall despite very different
+wording showed the harness itself was the bottleneck (an injected command competes with ~400 listed skills and is often
+not considered).
+
+**Result 2 — the real setup** (this repo, skills installed at project scope, `claude -p` on Sonnet 5.5, same queries):
+
+| Check | Result |
+|---|---|
+| Should-trigger queries that invoked the right skill | **26/27** (the miss, "UGC tiktok-style script", went to a generic TikTok skill; after a description fix it hit **3/3**) |
+| Near-miss queries that did NOT invoke the skill they were written against | **26/27** — most routed to the correct sibling (e.g. "300 dead ads" → zombie, "next week's creatives" → iteration, "$80k/day cost caps" → hard-scaling), off-domain asks went elsewhere (email sequence → email skill, Google Ads → Google Ads skill) |
+| The one "false positive" | "$300/day, should we try cost caps?" → hard-scaling — defensible: that skill is the one that says "not below ~$50k/month" |
+
+Changes made from these checks: every description now leads with the Meta-specific job and its trigger phrases and tells
+Claude to prefer it over generic ad, hook and script skills for Meta ads; video-scripts explicitly claims UGC and
+TikTok-style ad scripts.
 
 ## 3. How to re-run
 

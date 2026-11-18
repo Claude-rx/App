@@ -1,0 +1,228 @@
+[
+ {
+  "own": "andromeda2-ad-copy",
+  "query": "write a 45s founder story video script for our coffee brand",
+  "kind": "near",
+  "invoked": []
+ },
+ {
+  "own": "andromeda2-ad-copy",
+  "query": "design 6 static image ads for our protein bars with AI image prompts",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-static-ads"
+  ]
+ },
+ {
+  "own": "andromeda2-ad-copy",
+  "query": "write an email sequence for cart abandoners for our skincare store",
+  "kind": "near",
+  "invoked": [
+   "marketing:email-sequence"
+  ]
+ },
+ {
+  "own": "andromeda2-core",
+  "query": "write 3 primary texts and 3 headlines for our magnesium gummies ad, the video is a mom talking about her kids' bedtime chaos",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-ad-copy"
+  ]
+ },
+ {
+  "own": "andromeda2-core",
+  "query": "our cost cap campaign at $45 only spends 30% of its budget, what do we change?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-hard-scaling"
+  ]
+ },
+ {
+  "own": "andromeda2-core",
+  "query": "make me a 30 second UGC script for a posture corrector, avatar is office workers with neck pain",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-video-scripts"
+  ]
+ },
+ {
+  "own": "andromeda2-creative-iteration",
+  "query": "write the script for the new hook version we decided on",
+  "kind": "near",
+  "invoked": []
+ },
+ {
+  "own": "andromeda2-creative-iteration",
+  "query": "we have 300 dead ads in the account, can we reuse them?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-zombie-campaigns"
+  ]
+ },
+ {
+  "own": "andromeda2-creative-iteration",
+  "query": "how many ads per ad set when we launch the new batch and what minimum budget?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-launch-testing"
+  ]
+ },
+ {
+  "own": "andromeda2-hard-scaling",
+  "query": "we're at $300/day, should we try cost caps?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-hard-scaling"
+  ]
+ },
+ {
+  "own": "andromeda2-hard-scaling",
+  "query": "how do I scale from $500 to $2k a day?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-scaling"
+  ]
+ },
+ {
+  "own": "andromeda2-hard-scaling",
+  "query": "revive our paused ads from last year with a bid cap campaign",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-zombie-campaigns"
+  ]
+ },
+ {
+  "own": "andromeda2-launch-testing",
+  "query": "we're at $3k/day and 30% above target ROAS, how fast can we raise the budget?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-scaling"
+  ]
+ },
+ {
+  "own": "andromeda2-launch-testing",
+  "query": "our cost caps aren't spending at $80k/day, help",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-hard-scaling"
+  ]
+ },
+ {
+  "own": "andromeda2-launch-testing",
+  "query": "set up google ads search campaigns for our shopify store",
+  "kind": "near",
+  "invoked": [
+   "anthropic-skills:google-ads-campaign"
+  ]
+ },
+ {
+  "own": "andromeda2-scaling",
+  "query": "we spend $120k a day, cost caps vs bid caps vs ROAS goals, which should we use and at what values?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-hard-scaling"
+  ]
+ },
+ {
+  "own": "andromeda2-scaling",
+  "query": "our old winning ads all fatigued, how do we bring them back?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-zombie-campaigns"
+  ]
+ },
+ {
+  "own": "andromeda2-scaling",
+  "query": "what should our next week's creatives be based on our winners?",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-creative-iteration"
+  ]
+ },
+ {
+  "own": "andromeda2-static-ads",
+  "query": "write 3 primary texts for this static ad",
+  "kind": "near",
+  "invoked": []
+ },
+ {
+  "own": "andromeda2-static-ads",
+  "query": "write a 15 second video script with captions",
+  "kind": "near",
+  "invoked": []
+ },
+ {
+  "own": "andromeda2-static-ads",
+  "query": "design our brand logo and color palette for a new candle company",
+  "kind": "near",
+  "invoked": []
+ },
+ {
+  "own": "andromeda2-video-scripts",
+  "query": "write the headline and primary text to go with this video ad",
+  "kind": "near",
+  "invoked": []
+ },
+ {
+  "own": "andromeda2-video-scripts",
+  "query": "make a carousel ad with 5 frames comparing our mattress to competitors",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-static-ads"
+  ]
+ },
+ {
+  "own": "andromeda2-video-scripts",
+  "query": "write a youtube video script about our company history for our channel, 8 minutes, educational",
+  "kind": "near",
+  "invoked": []
+ },
+ {
+  "own": "andromeda2-zombie-campaigns",
+  "query": "our winning ad is fatiguing, make me 5 iterations of it",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-creative-iteration"
+  ]
+ },
+ {
+  "own": "andromeda2-zombie-campaigns",
+  "query": "set up cost caps for our scale campaign at $60k/day",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-hard-scaling"
+  ]
+ },
+ {
+  "own": "andromeda2-zombie-campaigns",
+  "query": "restart our ad account after a 3 month pause",
+  "kind": "near",
+  "invoked": [
+   "andromeda2-scaling"
+  ]
+ },
+ {
+  "own": "andromeda2-video-scripts",
+  "query": "write a UGC tiktok-style script for our knee massager, 30 seconds, hook in the first 2 seconds, give me alt hooks too",
+  "kind": "retest",
+  "invoked": [
+   "andromeda2-video-scripts"
+  ]
+ },
+ {
+  "own": "andromeda2-video-scripts",
+  "query": "write a UGC tiktok-style script for our knee massager, 30 seconds, hook in the first 2 seconds, give me alt hooks too",
+  "kind": "retest",
+  "invoked": [
+   "andromeda2-video-scripts"
+  ]
+ },
+ {
+  "own": "andromeda2-video-scripts",
+  "query": "write a UGC tiktok-style script for our knee massager, 30 seconds, hook in the first 2 seconds, give me alt hooks too",
+  "kind": "retest",
+  "invoked": [
+   "andromeda2-video-scripts"
+  ]
+ }
+]
