@@ -1,0 +1,26 @@
+[
+ {
+  "query": "make 8 static image ads for our collagen coffee creamer, different angles, with the text on each image and AI image prompts",
+  "should_trigger": true
+ },
+ {
+  "query": "turn our winning UGC video into statics, we want us-vs-them, review cards and a native post style",
+  "should_trigger": true
+ },
+ {
+  "query": "we need black friday image ads with the offer, back in stock ads and a few objection-killer statics for retargeting",
+  "should_trigger": true
+ },
+ {
+  "query": "write 3 primary texts for this static ad",
+  "should_trigger": false
+ },
+ {
+  "query": "write a 15 second video script with captions",
+  "should_trigger": false
+ },
+ {
+  "query": "design our brand logo and color palette for a new candle company",
+  "should_trigger": false
+ }
+]

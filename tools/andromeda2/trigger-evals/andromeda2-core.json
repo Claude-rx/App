@@ -1,0 +1,26 @@
+[
+ {
+  "query": "since meta rolled out the new andromeda thing our ROAS fell off a cliff, what does andromeda actually reward now and what should we change in how we make ads?",
+  "should_trigger": true
+ },
+ {
+  "query": "can you build proper customer avatars for our menopause sleep supplement? we sell to women 45-60 but i feel like that's too broad for meta now",
+  "should_trigger": true
+ },
+ {
+  "query": "audit our facebook ads account, we spend 40k/mo on a hair growth serum and nothing new is winning. i can export whatever you need from ads manager",
+  "should_trigger": true
+ },
+ {
+  "query": "write 3 primary texts and 3 headlines for our magnesium gummies ad, the video is a mom talking about her kids' bedtime chaos",
+  "should_trigger": false
+ },
+ {
+  "query": "our cost cap campaign at $45 only spends 30% of its budget, what do we change?",
+  "should_trigger": false
+ },
+ {
+  "query": "make me a 30 second UGC script for a posture corrector, avatar is office workers with neck pain",
+  "should_trigger": false
+ }
+]

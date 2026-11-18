@@ -1,0 +1,26 @@
+[
+ {
+  "query": "we spend about $70k/day on meta, our cost cap campaigns spend full budget but CPA is 20% above the cap, what do we do?",
+  "should_trigger": true
+ },
+ {
+  "query": "set up bid caps and ROAS goals for a $1.5M/month account, what values and budgets?",
+  "should_trigger": true
+ },
+ {
+  "query": "how do the biggest brands structure accounts at $100k+/day with cost caps and value rules?",
+  "should_trigger": true
+ },
+ {
+  "query": "we're at $300/day, should we try cost caps?",
+  "should_trigger": false
+ },
+ {
+  "query": "how do I scale from $500 to $2k a day?",
+  "should_trigger": false
+ },
+ {
+  "query": "revive our paused ads from last year with a bid cap campaign",
+  "should_trigger": false
+ }
+]

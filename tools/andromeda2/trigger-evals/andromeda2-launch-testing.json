@@ -1,0 +1,26 @@
+[
+ {
+  "query": "we have 15 new creatives for 3 avatars and $250/day, how should we set up the campaign to test them and when do we turn ads off?",
+  "should_trigger": true
+ },
+ {
+  "query": "CBO or ABO for creative testing in 2026? how many ads per ad set and should we set minimum budgets?",
+  "should_trigger": true
+ },
+ {
+  "query": "relaunching our meta account after 3 months off, AOV $64, COGS 28%, what's the structure and how many ads do we launch per week",
+  "should_trigger": true
+ },
+ {
+  "query": "we're at $3k/day and 30% above target ROAS, how fast can we raise the budget?",
+  "should_trigger": false
+ },
+ {
+  "query": "our cost caps aren't spending at $80k/day, help",
+  "should_trigger": false
+ },
+ {
+  "query": "set up google ads search campaigns for our shopify store",
+  "should_trigger": false
+ }
+]

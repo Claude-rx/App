@@ -1,0 +1,26 @@
+[
+ {
+  "query": "write the primary text, headline and description for our winning UGC video for a heated eye mask (sleep + migraine relief vibe), CPA target $30",
+  "should_trigger": true
+ },
+ {
+  "query": "our CTR is 0.6% but hook rate is 38%, can you rewrite the ad copy under the video? product is a dog anxiety vest",
+  "should_trigger": true
+ },
+ {
+  "query": "need 5 variations of facebook ad captions for a black friday 40% off sale on our skincare bundle",
+  "should_trigger": true
+ },
+ {
+  "query": "write a 45s founder story video script for our coffee brand",
+  "should_trigger": false
+ },
+ {
+  "query": "design 6 static image ads for our protein bars with AI image prompts",
+  "should_trigger": false
+ },
+ {
+  "query": "write an email sequence for cart abandoners for our skincare store",
+  "should_trigger": false
+ }
+]

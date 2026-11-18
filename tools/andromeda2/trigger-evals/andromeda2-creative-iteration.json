@@ -1,0 +1,26 @@
+[
+ {
+  "query": "here's our ads export, which ads are winning and what should we make next week? give me iterations and new concepts",
+  "should_trigger": true
+ },
+ {
+  "query": "our best video has been running 6 weeks and frequency is creeping up, what variations should we make before it dies?",
+  "should_trigger": true
+ },
+ {
+  "query": "why is this ad winning and how do we make more like it? it's a hands-demo video for a knee brace",
+  "should_trigger": true
+ },
+ {
+  "query": "write the script for the new hook version we decided on",
+  "should_trigger": false
+ },
+ {
+  "query": "we have 300 dead ads in the account, can we reuse them?",
+  "should_trigger": false
+ },
+ {
+  "query": "how many ads per ad set when we launch the new batch and what minimum budget?",
+  "should_trigger": false
+ }
+]

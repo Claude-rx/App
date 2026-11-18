@@ -1,0 +1,26 @@
+[
+ {
+  "query": "write a UGC tiktok-style script for our knee massager, 30 seconds, hook in the first 2 seconds, give me alt hooks too",
+  "should_trigger": true
+ },
+ {
+  "query": "our reels ads have a 12% hold rate, rewrite the script so people keep watching. it's a 60s founder video for a teeth whitening pen",
+  "should_trigger": true
+ },
+ {
+  "query": "i need a creator brief and shot list for a street interview ad about our hydration powder",
+  "should_trigger": true
+ },
+ {
+  "query": "write the headline and primary text to go with this video ad",
+  "should_trigger": false
+ },
+ {
+  "query": "make a carousel ad with 5 frames comparing our mattress to competitors",
+  "should_trigger": false
+ },
+ {
+  "query": "write a youtube video script about our company history for our channel, 8 minutes, educational",
+  "should_trigger": false
+ }
+]

@@ -1,0 +1,26 @@
+[
+ {
+  "query": "we have like 400 paused ads from the last 2 years, some were winners, is there a way to get money out of them again?",
+  "should_trigger": true
+ },
+ {
+  "query": "what's a zombie campaign on facebook and how do I set one up?",
+  "should_trigger": true
+ },
+ {
+  "query": "our old winning campaign stopped working, how do we make old winners work again?",
+  "should_trigger": true
+ },
+ {
+  "query": "our winning ad is fatiguing, make me 5 iterations of it",
+  "should_trigger": false
+ },
+ {
+  "query": "set up cost caps for our scale campaign at $60k/day",
+  "should_trigger": false
+ },
+ {
+  "query": "restart our ad account after a 3 month pause",
+  "should_trigger": false
+ }
+]

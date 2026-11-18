@@ -1,0 +1,26 @@
+[
+ {
+  "query": "our prospecting campaign is at $1,500/day and ROAS is 2.8 vs 2.2 target for the last 2 weeks, how do we scale to $5k/day without killing it?",
+  "should_trigger": true
+ },
+ {
+  "query": "we raised budget 50% and ROAS dropped from 3.1 to 2.4 in 3 days, should we cut back?",
+  "should_trigger": true
+ },
+ {
+  "query": "should we duplicate our winning campaign or make a separate scale campaign to spend more?",
+  "should_trigger": true
+ },
+ {
+  "query": "we spend $120k a day, cost caps vs bid caps vs ROAS goals, which should we use and at what values?",
+  "should_trigger": false
+ },
+ {
+  "query": "our old winning ads all fatigued, how do we bring them back?",
+  "should_trigger": false
+ },
+ {
+  "query": "what should our next week's creatives be based on our winners?",
+  "should_trigger": false
+ }
+]
