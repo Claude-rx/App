@@ -26,6 +26,22 @@ event + event_id it already received in the past 48 hours, so the relay sends ev
 webhook, for orders placed in the last 40 hours, and sends nothing for older orders (e.g. a fulfillment update weeks
 later). Test orders (`is_test`) are skipped unless a test event code is set. Canceled orders are skipped.
 
+## Option A — GitHub Actions (no server, no new account)
+
+`.github/workflows/tiktok-events.yml` runs `poll.mjs` every 10 minutes on GitHub: it reads the orders placed in the
+last 40 hours that changed in the last hour and sends their purchases and upsells (same event_ids as the pixel; TikTok
+drops repeats). Purchases reach TikTok 5–15 minutes after checkout; the browser pixel still reports them at once.
+
+1. Repository → Settings → Secrets and variables → Actions → New repository secret:
+   `TIKTOK_ACCESS_TOKEN` (the Events API token) and `NEXT_ADMIN_TOKEN` (a NEXT API token that can read orders).
+2. The workflow must be on the repository's default branch (scheduled runs only start there).
+3. Actions → TikTok Events API → Run workflow, with a Test Events code: the events show under Events Manager → Test
+   Events. Leave the code empty afterwards; the schedule takes over.
+
+`node tools/tiktok-events/poll.mjs --dry-run` lists what a run would send without sending it.
+
+## Option B — Netlify function (instant, needs a Netlify site)
+
 ## Set it up (about 10 minutes)
 
 1. **Netlify site.** Netlify → Add new site → Import from Git → this repository → **Base directory
@@ -58,6 +74,7 @@ later). Test orders (`is_test`) are skipped unless a test event code is set. Can
 - `lib/relay.mjs` — order → TikTok events, hashing, the Events API call, the Admin API read (no dependencies).
 - `netlify/functions/tiktok-events.mjs` — the webhook endpoint (`POST /tiktok-events?key=…`). Non-2xx on a failed
   order lookup or a TikTok refusal, so NEXT retries.
+- `poll.mjs` — the scheduled sender (Option A).
 - `send-order.mjs` — preview (default) or send one order's events by hand.
 - `create_webhook.py` — create / update / list / delete the store webhook.
 - `test/relay.test.mjs` — `node --test tools/tiktok-events/test/*.test.mjs` (synthetic orders only).

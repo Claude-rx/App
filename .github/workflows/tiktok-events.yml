@@ -1,0 +1,44 @@
+name: TikTok Events API
+
+# Sends the Get Rid Of store's purchases (and upsells) to TikTok's Events API every 10 minutes, with the same event_ids
+# as the browser pixel so TikTok keeps one copy of each. See tools/tiktok-events/README.md.
+# Needs two repository secrets: TIKTOK_ACCESS_TOKEN and NEXT_ADMIN_TOKEN. Until they exist each run only logs a warning.
+# Scheduled runs happen on the repository's default branch only.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+    inputs:
+      test_event_code:
+        description: "TikTok Test Events code (optional: events then show only under Test Events)"
+        required: false
+      lookback_minutes:
+        description: "Send orders changed in the last N minutes (default 60; orders older than 40 hours are never sent)"
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tiktok-events
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tools/tiktok-events
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Send recent purchases to TikTok
+        env:
+          TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+          NEXT_ADMIN_TOKEN: ${{ secrets.NEXT_ADMIN_TOKEN }}
+          TIKTOK_TEST_EVENT_CODE: ${{ inputs.test_event_code }}
+          LOOKBACK_MINUTES: ${{ inputs.lookback_minutes || '60' }}
+        run: node tools/tiktok-events/poll.mjs
