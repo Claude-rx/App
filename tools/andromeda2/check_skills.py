@@ -28,6 +28,31 @@ EXPECTED = [
 ]
 
 
+def yaml_problem(block: str) -> str | None:
+    """Return a YAML error for the frontmatter block, or None. Uses PyYAML when installed; otherwise flags the
+    mistakes that break real YAML parsers in one-line plain scalars (': ' or ' #' inside an unquoted value)."""
+    try:
+        import yaml  # type: ignore
+    except ImportError:
+        yaml = None
+    if yaml is not None:
+        try:
+            data = yaml.safe_load(block)
+        except yaml.YAMLError as exc:
+            return str(exc).splitlines()[0]
+        return None if isinstance(data, dict) else "frontmatter is not a mapping"
+    for line in block.splitlines():
+        m = re.match(r"^([A-Za-z_-]+):\s+(.*)$", line)
+        if not m:
+            continue
+        val = m.group(2)
+        if val[:1] in "\"'|>":
+            continue
+        if ": " in val or " #" in val:
+            return f"unquoted value of '{m.group(1)}' contains ': ' or ' #' (invalid YAML plain scalar)"
+    return None
+
+
 def parse_frontmatter(text: str) -> tuple[dict[str, str], str]:
     if not text.startswith("---\n"):
         return {}, text
@@ -58,6 +83,10 @@ def check_skill(d: Path) -> list[str]:
         return [f"{rel}: missing SKILL.md"]
     text = skill_md.read_text(encoding="utf-8")
     fm, body = parse_frontmatter(text)
+    if text.startswith("---\n") and text.find("\n---", 4) != -1:
+        problem = yaml_problem(text[4:text.find("\n---", 4)])
+        if problem:
+            errs.append(f"{rel}: invalid YAML frontmatter: {problem}")
     name, desc = fm.get("name", ""), fm.get("description", "")
     if name != d.name:
         errs.append(f"{rel}: frontmatter name {name!r} != directory {d.name!r}")

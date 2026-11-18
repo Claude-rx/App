@@ -101,6 +101,13 @@ Plan 3-6 iterations per winner; ship what this week's count allows and queue the
 goes out week by week, not all at once). Blueprint's range is 1-6 per concept per round; beyond six only at large
 spend. Even brands with thousands of live ads run ~10-50 concepts: depth comes from iterations.
 
+**Top-winner priority.** The account's top winner (largest spend at KPI) gets at least 3 of its own iterations in this
+week's batch — "You have a winner. Make another one" (Blueprint live calls); it is the highest-hit-rate bet you have.
+When a clear winner exists, the `testing-plan` count is a floor, not a ceiling: add its iterations on top if the team can
+make them well. If capacity is tight, cut lesser near-winners and extra concepts first, never the top winner's iterations.
+Iterations of near-winners (fixing a weak hook on a good body) are welcome, but they count as their own parent's
+iterations, not the top winner's.
+
 ### 4. Plan the iterations and the new concepts
 **Labels.** *New concept (N)* = a new avatar (side), a new template (form factor) or a new angle carried through the
 whole ad (a different problem, moment or mechanism). *Iteration (I)* = same avatar + template + angle, one layer of
@@ -162,6 +169,9 @@ and headlines → `andromeda2-ad-copy`. Pass them the brief; they write the fini
   KPI; it does not have to beat its parent ("this is a provable concept", Blueprint live calls). Five of six iterations
   flopping while the parent holds is a normal hit rate; keep batting. Keep sale creative in its own campaign and never
   judge evergreen iterations on sale or post-sale days.
+- **Sales and holidays don't pause the pipeline.** Evergreen iterations launch on the normal cadence into the core CBO
+  even in Black Friday / holiday weeks ("so evergreen keeps flowing" — Blueprint); exclude the sale and post-sale days
+  from the judging window and extend it by that many days. Postpone only if the user asks.
 - **Classify** each test (Evolve): Winning (great spend, great CPA) → it becomes a parent; Poor spend, great CPA → keep
   it on, iterate hook or format to earn spend; Great spend, poor CPA → keep the attention, rebuild the back half (offer,
   mechanism, CTA, page); Poor spend, poor CPA → log the reason from the Ad Review Bible and retire it.
@@ -234,6 +244,8 @@ A complete worked example (dog joint chews, $78k/month, account 12% off target, 
   target; parent and child would not feel like the same ad twice.
 - Each new concept names its avatar + template (+ angle) and answers a question no live ad answers.
 - The mix follows the spend tier, moved only for a stated account state; the count fits real production capacity.
+- The top winner has at least 3 of its own iterations in this batch, and the batch ships on the normal cadence (sale
+  weeks change the judging window, not the launch).
 - Winners stay live and unedited; everything new goes into new packs; no floors stay on fatiguing ads; fatigued winners
   below KPI go through the pausing tree to the zombie hand-off.
 - Metrics come from the export or are marked "not verified"; winner-vs-loser patterns are labelled correlations, each

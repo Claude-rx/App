@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+      - name: PyYAML for the strict frontmatter check
+        run: python3 -m pip install --quiet pyyaml
       - name: a2.py unit tests
         run: python3 -I -m unittest discover -s tools/andromeda2/tests -v
       - name: Skill suite structure, links, evals and shared-copy sync
