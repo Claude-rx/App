@@ -15,7 +15,8 @@ Contents
 8. Mood × intensity: the four emotional zones
 9. Dimensionalising pain (physical → life → emotional)
 10. Angle generators
-11. Compliance guardrails
+11. Selling levers and quick frameworks
+12. Compliance guardrails
 
 ---
 
@@ -186,7 +187,35 @@ Ways to find new doors into the same product (each produces a new concept, not a
 - **Mine competitors** (long-running ads = proven angles; gaps = messages nobody covers) and **mine comments** on your own
   winners for the next angle.
 
-## 11. Compliance guardrails (Meta policy)
+## 11. Selling levers and quick frameworks
+
+**Three ways to sell × the avatar multiplier** (Blueprint): every ad pulls at least one lever, aimed at one avatar.
+- **Offer** = value exchange + timing + risk profile ("guaranteed Valentine's delivery; if she hates it, money back").
+- **Mechanism** = the features and *how* it works — the causal explanation that makes the promise believable; give it a
+  name ("the M3 method" beats "a three-step process").
+- **Education** = "Oh… THAT's the real problem": a belief update that makes the product the logical conclusion.
+- **Avatar** = "This is talking to me": identity + context + language. Seven ways to signal it — call it out by name; one
+  product, many avatars; don't name it, imply it; name the symptom/situation ("crush your day without the 2 p.m. crash");
+  name the behaviour ("why switch from pills to gummies" skips the convincing); the aspiration; the pain or ceiling.
+  Self-test: can I say who this is for in one sentence, and does the first line/frame signal that person?
+
+**Desire, identity, belief** (Evolve / Schwartz): desire decides the content (you channel existing desire, you can't create
+it; strength = intensity × scope); identity decides the visuals (who they want to be seen as); belief decides how the ad is
+built — via a Yes-train, symptoms they recognise, authority, or logic. Aware-level ads convert but rarely scale;
+problem-aware and unaware ads scale.
+
+**16 basic desires** (Reiss, via Denney) — pick the 1-2 your buyers act on: acceptance, curiosity, eating, family, honor,
+idealism, independence, order, physical activity, power, romance, saving, social contact, social status, tranquility,
+vengeance. Most used on Meta: acceptance, family, physical activity, power, romance, social contact, status, tranquility.
+
+**Kindergarten-simple pitch** (Kell) — write these seven one-liners before any script or copy: Problem → Emotional problem →
+Root problem (UMP) → Root solution (UMS) → Ingredients/techniques → Physical wins → Emotional wins. If you cannot explain the
+product in two sentences (hidden cause + how it fixes it), the ad will not be understood. Write at a 5th-6th-grade level.
+
+**Hook discovery score** (Evolve CRO) — score each customer pain statement 1-5 on Appeal, Exclusivity, Clarity, Motivation
+(max 20); turn the winner into four hook forms: obvious-yes question, desired future state, first-person direct, if/then.
+
+## 12. Compliance guardrails (Meta policy)
 
 - No personal-attribute assertions in the second person: not "Are you overweight?" / "Your diabetes…"; say "For people who
   want…", tell a first-person story, or describe the situation.
@@ -196,3 +225,10 @@ Ways to find new doors into the same product (each produces a new concept, not a
   with the brand's real data before launch.
 - Special ad categories (credit, housing, employment, social issues) must be declared.
 - AI people: disclose where the law requires it (e.g. New York); never present an AI person as a real customer.
+- Health, weight-loss and telehealth offers are reviewed much harder. Avoid: before/after images, pounds-lost numbers,
+  time-bound outcome promises ("lose 20 lbs in 30 days"), "miracle / breakthrough / secret", medication names in headlines,
+  scales showing numbers, zoom-ins on body parts, all caps and "!!!", fake scarcity. Include "if medically appropriate /
+  prescription required" language where it applies. Brand-safe framing (Kell, Snow): lead with the fascinating benefit and
+  the end outcome rather than the shameful negative.
+- Never fabricate authority: no fake "news" publications, no invented doctors or studies, no scripted fake comments, no
+  static "ends today" timers that never end. Borrow the structure and emotional language of old advertorials, not their fakes.

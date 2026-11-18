@@ -83,18 +83,26 @@ day 30", "Dr. Martin, University of Grenoble", "2,847 customers"). Every number 
 ### R4. Diversity of intent, not volume
 *Mechanism:* Meta reads the full ad ("every phrase", not the thumbnail or first frame). Ads that say the same thing to the
 same side compete for the same experts and look like noise.
-*Rule:* vary the **concept** (avatar/side, angle, mechanism, awareness stage, desire, format family) when you need new
-reach; vary **components** (hook, lead, visual, actor, CTA, copy) when you need to extend a winner. Every new ad should
-answer a different question. A creator's package or a round of similar statics counts as one concept.
+*Rule:* **concept = avatar (side) + template (form factor)** (Blueprint 2026). Andromeda "takes a concept and matches it
+with the audience": a new avatar on a proven template, or a proven avatar in a new template (us-vs-them static, UGC in the
+car, carousel, founder story…), is a **new concept** — new reach. An **iteration** keeps avatar + template and changes what
+is emphasised: message (hook, headline, emotional trigger, promise frame), mechanism detail, education point, offer
+incentive, visual (image, scene, actor, pacing), or a finer slice of the same avatar (awareness stage, price-sensitive vs
+status-driven). Concepts open new pockets; iterations go deeper into a pocket and extend winners. Every new ad should answer
+a different question. A creator's package or a round of near-identical statics counts as one concept. Big brands with
+thousands of live ads run only ~10-50 concepts — depth comes from iterations.
 *Check:* label each ad `concept` or `iteration` before launch; a pack of 8 ads with 8 identical messages is one ad.
 
 ### R5. Trust the spend signal (don't force spend)
 *Mechanism:* retrieval now evaluates every ad; zero or near-zero spend is the system's judgement.
-*Rule:* test in a CBO with packs and let Meta allocate. The only forcing tool is a short fairness floor: a new pack may get a
-daily minimum of 1x target CPA for 7 days, with all live minimums at most 20% of the campaign budget, then removed
-(Blueprint M4). Never test in ABO and "graduate"; never keep minimums on for weeks; never pause an ad on one bad day.
-Andromeda 2 makes forced spend even less efficient (Pawliw): "if Meta won't spend on your ad, Meta is more right than it's
-ever been."
+*Rule:* test in a CBO with packs and let Meta allocate. Andromeda 2 makes forced spend less efficient than ever (Pawliw):
+"if Meta won't spend on your ad, Meta is more right than it's ever been" — forcing spend on every ad at 10x creative volume
+would mean 10x budget for worse results. The only forcing tool is a short fairness floor, used when new packs are being
+starved: a daily minimum of 1x target CPA for at most 7 days, all live minimums ≤ 20% of the campaign budget, removed as soon
+as the pack spends above it (Blueprint M4). Evolve's 3:2:2 tests run without any min/max ("we tested it and it didn't help").
+Never test in ABO and "graduate" (a permanent cost centre); never leave floors on fatiguing ads; never pause on one bad day.
+The one deliberate exception is the high-volume Shotgun + Sniper method (one ad per ABO ad set, manual kill switches) for
+brands shipping dozens of creatives a week — see `andromeda2-launch-testing`.
 *Check:* how much of the budget is forced (minimums, ABO budgets, scale campaigns)? Keep it under 20%.
 
 ### R6. A hyper-competitive account

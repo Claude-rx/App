@@ -9,8 +9,9 @@ Subcommands
   testing-plan   creative volume per week, new-pack minimums, kill thresholds
   analyze        read an Ads Manager CSV export: metrics, diagnosis and a verdict per ad
   scale          next daily budget for a campaign from its recent ROAS/CPA (vertical scaling)
-  cost-controls  starting values for cost caps, bid caps and ROAS goals (hard scaling)
-  zombie         pick zombie-campaign candidates from an Ads Manager CSV export
+  cost-controls  cost cap / ROAS goal / bid cap setup values and budgets (hard scaling)
+  cap-diagnose   the 4-scenario diagnosis for a capped campaign (budget, cap or creative?)
+  zombie         zombie-campaign plan from a long-range ad-level CSV: buckets, bid cap, starting budget
 
 Every rule is a practitioner heuristic from the source courses (see the skills' references),
 not Meta documentation. The account's own baseline beats any generic number.
@@ -566,48 +567,73 @@ def cmd_analyze(a: argparse.Namespace) -> None:
 
 
 def scale_step(budget: float, kpi_3d: float, kpi_7d: float, target: float, metric: str = "roas",
-               hours_since_change: float = 48, conv_per_day: float | None = None) -> dict:
-    """Next daily budget. metric 'roas' (higher is better) or 'cpa' (lower is better)."""
-    if metric == "cpa":
-        r3, r7 = target / kpi_3d, target / kpi_7d
-    else:
-        r3, r7 = kpi_3d / target, kpi_7d / target
-    if hours_since_change < 24:
-        return {"action": "HOLD", "new_budget": budget, "change_pct": 0.0,
-                "why": "last budget change < 24 h ago: at most one change per day"}
-    if r3 >= 1.5 and r7 >= 1.2:
-        step = 0.40 if r3 >= 2.0 else 0.30
-        why = "far above target on 3 and 7 days: big step (30-50%) on any 3-day window above target"
-    elif r3 >= 1.2 and r7 >= 1.0:
-        step = 0.20
-        why = "comfortably above target: +20% (20-30% band)"
-    elif r3 >= 1.0 and r7 >= 1.0:
+               hours_since_change: float = 72, conv_per_day: float | None = None, kpi_14d: float | None = None) -> dict:
+    """Next daily budget for the prospecting CBO (Blueprint "Vertical Scaling" + "Learning Phase" lessons).
+
+    ratio > 1 means better than target. Decisions use the 7-day window, confirmed by 3-day (and 14-day if given).
+    Default move 10-30% every 48-72 h; 10-15% for big, tight campaigns (>= $3k/day); bigger at ~$100-300/day;
+    +50% is fine for an established campaign ~40% above target; double when 'smashing' (>= 2x target), bounded by
+    delta math (even if the new dollars returned nothing, blended KPI stays at target).
+    """
+    def ratio(k: float) -> float:
+        return (target / k) if metric == "cpa" else (k / target)
+    r3, r7 = ratio(kpi_3d), ratio(kpi_7d)
+    r14 = ratio(kpi_14d) if kpi_14d else None
+    big = budget >= 3000
+    small = budget <= 300
+    delta_cap = round(budget * r7, 2)  # max budget at which, with zero return on new spend, the 7-day KPI still meets target
+    res = {"ratio_3d": round(r3, 3), "ratio_7d": round(r7, 3), "ratio_14d": round(r14, 3) if r14 else None,
+           "delta_max_budget": delta_cap}
+
+    smashing = r7 >= 2.0 and r3 >= 1.6
+    if hours_since_change < 48 and not smashing:
+        return {**res, "action": "HOLD", "new_budget": budget, "change_pct": 0.0,
+                "why": "last move < 48 h ago: wait 48-72 h between moves unless smashing (>= 2x target)"}
+    if smashing:
+        new = min(budget * 2, delta_cap)
+        return {**res, "action": "INCREASE", "new_budget": round(new, 2), "change_pct": new / budget - 1,
+                "why": "smashing (>= 2x target on 7 days): double, bounded by delta math — even if the new dollars "
+                       "returned nothing the account would still sit at target"}
+    if r7 >= 1.0 and r3 < 0.9:
+        return {**res, "action": "HOLD", "new_budget": budget, "change_pct": 0.0,
+                "why": "7-day above target but last 3 days soft: hold the line; if cost per ATC/IC is flat, buyers are just lagging"}
+    if r14 is not None and r14 < 0.9 and r7 >= 1.0:
         step = 0.10
-        why = "just above target: small step, validate on the 7-day window"
-    elif r7 >= 1.0 > r3:
-        return {"action": "HOLD", "new_budget": budget, "change_pct": 0.0,
-                "why": "7-day on target, last 3 days soft: hold, do not react to short dips"}
-    elif r7 >= 0.8:
+        why = "7-day above target but 14-day below: smallest step until the trend confirms"
+    elif r7 >= 1.4 and r3 >= 1.2:
+        step = 0.50 if (small or not big) else 0.30
+        why = ("~40%+ above target and stable: +50% is fine (the ROAS dip after a big jump is conversion lag on new impressions)"
+               if step == 0.5 else "well above target on a big campaign: +30% (top of the 10-30% band)")
+    elif r7 >= 1.15:
+        step = 0.15 if big else (0.35 if small else 0.25)
+        why = "comfortably above target: " + ("10-15% on a big, tight campaign" if big else "a meaningful step (small budgets need bigger moves)")
+    elif r7 >= 1.0:
+        step = 0.10 if big else (0.25 if small else 0.15)
+        why = "just above target: small step" + ("" if not small else " ($100 -> $110 does nothing at this size)")
+    elif r7 >= 0.9:
+        return {**res, "action": "HOLD", "new_budget": budget, "change_pct": 0.0,
+                "why": "0-10% below target: do not raise; slow vertical until the creative pipeline (iterations of winners) catches up"}
+    elif r7 >= 0.75:
         step = -0.20
-        why = "7-day 0-20% below target: trim 20% and push new creative (make money first)"
+        why = "10-25% below target for a week: trim 20% and ship iterations of the winners (make money first)"
     else:
         step = -0.30
-        why = "7-day 20%+ below target: cut 30%, fix creative/offer before adding spend"
-    if conv_per_day is not None and conv_per_day < 10 and step > 0.2:
-        step = 0.2
-        why += "; capped at +20% because under 10 conversions/day the signal is noisy"
-    return {"action": "INCREASE" if step > 0 else "DECREASE", "new_budget": round(budget * (1 + step), 2),
-            "change_pct": step, "why": why, "ratio_3d": round(r3, 3), "ratio_7d": round(r7, 3)}
+        why = "25%+ below target for a week: cut 30%; fix creative/offer before spending more"
+    if conv_per_day is not None and conv_per_day < 3 and step > 0:
+        why += "; under 3 conversions/day the 3-day number is noise — lean on the 7/14-day windows"
+    return {**res, "action": "INCREASE" if step > 0 else "DECREASE", "new_budget": round(budget * (1 + step), 2),
+            "change_pct": step, "why": why}
 
 
 def cmd_scale(a: argparse.Namespace) -> None:
-    res = scale_step(a.budget, a.kpi_3d, a.kpi_7d, a.target, a.metric, a.hours_since_change, a.conv_per_day)
+    res = scale_step(a.budget, a.kpi_3d, a.kpi_7d, a.target, a.metric, a.hours_since_change, a.conv_per_day, a.kpi_14d)
     text = f"""## Vertical scaling step
-Budget {money(a.budget)}/day | {a.metric.upper()} 3-day {a.kpi_3d} | 7-day {a.kpi_7d} | target {a.target}
+Budget {money(a.budget)}/day | {a.metric.upper()} 3-day {a.kpi_3d} | 7-day {a.kpi_7d} | 14-day {a.kpi_14d or '-'} | target {a.target}
 
 **{res['action']} -> {money(res['new_budget'])}/day ({res['change_pct'] * 100:+.0f}%)**
 Why: {res['why']}.
-Twin engine: every budget step needs fresh creative behind it (keep the weekly new-ad quota running).
+Delta-math ceiling: {money(res['delta_max_budget'])}/day. Check before moving: King goal, new-customer share (audience segments),
+incremental ROAS of the new segment, and the 14 -> 7 -> 3 -> 1 day trend. Twin engine: keep iterations of winners shipping every week.
 """
     emit(res, text, a.json)
 
@@ -617,58 +643,107 @@ Twin engine: every budget step needs fresh creative behind it (keep the weekly n
 # ----------------------------------------------------------------------------------------------
 
 
-def cost_control_plan(target_cpa: float | None, target_roas: float | None, current_cpa: float | None,
-                      current_roas: float | None, daily_budget: float, aov: float | None = None) -> dict:
-    """Starting values for a cost-control ladder. Heuristics, refined by spend-through (healthy ~80% of budget)."""
-    plan: dict = {"daily_budget": daily_budget, "ladders": []}
+def cost_control_plan(target_cpa: float | None, target_roas: float | None, expected_spend: float,
+                      monthly_spend: float | None = None) -> dict:
+    """Cost-control setup (Blueprint "Cost Controls" lesson + Pellegrini's bid-cap scaling campaign).
+
+    Cost cap / cost per result goal = the TRUE target CPA (never a "greedy" lower number).
+    Budget = expected daily spend / 0.8, so the cap (not the budget) limits delivery and average spend-through is ~80%.
+    ROAS goal: same rules with the true target ROAS. Bid caps: advanced operators only, budget inflated.
+    """
+    plan: dict = {"expected_spend": expected_spend, "controls": [], "warnings": []}
+    if monthly_spend is not None and monthly_spend < 50_000:
+        plan["warnings"].append(f"monthly spend {money(monthly_spend)} < $50k: cost controls rarely work sustainably here; "
+                                "stay on highest volume and fix creative/offer first")
+    budget = round(expected_spend / 0.8, 2)
     if target_cpa:
-        base = current_cpa or target_cpa
-        caps = sorted({round(min(target_cpa, base) * m, 2) for m in (0.9, 1.0, 1.15, 1.3)})
-        plan["ladders"].append({
-            "type": "cost cap (cost per result goal)",
-            "start": round(target_cpa, 2),
-            "ladder": caps,
-            "budget_rule": "budget high enough that the cap, not the budget, limits delivery: ~5-10 conversions/day at the cap",
-            "suggested_budget_per_campaign": round(max(target_cpa * 10, daily_budget / max(len(caps), 1)), 2),
+        plan["controls"].append({
+            "type": "cost cap (cost per result goal) — default for high-spend e-commerce",
+            "value": round(target_cpa, 2),
+            "budget": budget,
+            "why": "cap = true target CPA (profitable on first purchase or on the LTV you underwrite); budget = expected spend / 0.8",
         })
-        plan["ladders"].append({
-            "type": "bid cap",
-            "start": round(target_cpa * 1.0, 2),
-            "ladder": sorted({round(target_cpa * m, 2) for m in (0.8, 1.0, 1.25, 1.5)}),
-            "budget_rule": "inflate the budget (2-5x what you expect to spend); the bid controls spend, spend-through below 100% is normal",
-            "suggested_budget_per_campaign": round(max(target_cpa * 20, daily_budget), 2),
+        plan["controls"].append({
+            "type": "bid cap — advanced only (Pellegrini: 'inflated, normal bid cap' scaling campaign for top winners)",
+            "value": round(target_cpa, 2),
+            "test_rungs": sorted({round(target_cpa * m, 2) for m in (0.85, 1.0, 1.2)}),
+            "budget": round(expected_spend * 3, 2),
+            "why": "a bid cap limits each auction bid, so spend is governed by the bid: inflate the budget (2-5x expected spend) and let "
+                   "under-delivery be normal; one ad set per rung, proven winners only, judge each rung on 3-7 days",
         })
     if target_roas:
-        start = round(target_roas * 0.9, 2) if current_roas is None else round(min(target_roas, current_roas) * 0.9, 2)
-        plan["ladders"].append({
-            "type": "ROAS goal (minimum ROAS, value optimisation)",
-            "start": start,
-            "ladder": sorted({round(target_roas * m, 2) for m in (0.8, 0.9, 1.0, 1.1)}),
-            "budget_rule": "start ~10% under target so it can spend; tighten 5-10% at a time if it overspends below target",
-            "suggested_budget_per_campaign": round(daily_budget, 2),
+        plan["controls"].append({
+            "type": "ROAS goal (min ROAS, maximize value) — same rules as cost caps",
+            "value": round(target_roas, 2),
+            "budget": budget,
+            "why": "goal = true target ROAS on the same attribution you judge on; budget = expected spend / 0.8",
         })
     plan["rules"] = [
-        "Healthy cost-capped spend-through is ~80% of budget; ~30% means the cap is too tight (or creative too weak).",
-        "Move caps in 5-10% steps, at most once per 48-72 h per campaign; never edit cap and budget the same day.",
-        "Cost controls are a privilege of volume: use them when the account already spends and converts daily at target.",
-        "Highest-volume prospecting CBO stays the core; capped campaigns sit beside it with proven ads only.",
+        "Cost controls only when the account already spends ~$50k-100k+/month at target with daily conversion volume.",
+        "The cap evaluates on a ~7-day lookback: judge it on 7 days, never on one day.",
+        "Healthy = target hit and ~80% of budget spent on average (good days spend 100%+, bad days 50% or less).",
+        "Never 'game' the cap below target; a $1-2 (~2%) move can open or close a lot of inventory.",
+        "The prospecting CBO on highest volume stays the core; capped campaigns hold proven ads only.",
+        "Run `a2.py cap-diagnose` every few days to pick the move (budget, cap, or creative).",
     ]
     return plan
+
+
+def cap_diagnose(cap: float, actual: float, budget: float, avg_spend: float, true_target: float | None = None,
+                 metric: str = "cpa") -> dict:
+    """The 4-scenario matrix: target hit? x budget spent in full? (7-day averages)."""
+    true_target = true_target or cap
+    hit = actual <= cap if metric == "cpa" else actual >= cap
+    util = avg_spend / budget if budget else 0.0
+    full = util >= 0.95
+    healthy_util = 0.7 <= util < 0.95
+    below_target_cap = (cap < true_target) if metric == "cpa" else (cap > true_target)
+    if hit and full:
+        scen, action = 1, ("Target hit AND budget spent in full: RAISE THE BUDGET (keep the cap) until spend-through falls back to ~80%. "
+                           "Only alternative: tighten the cap by $1-2 if you deliberately want more margin.")
+    elif hit and not full:
+        if healthy_util:
+            scen, action = 4, "Working as designed (~80% spend-through at target). Leave it; feed iterations of the winners to grow volume."
+        elif below_target_cap:
+            scen, action = 4, ("Target hit but under-spending and the cap is below your true target: walk the cap up toward the true "
+                               "target in small steps (+2-3%, a few days each) or set it straight to the true target.")
+        else:
+            scen, action = 4, ("Target hit but under-spending with the cap already at the true target: the cap is restricting correctly. "
+                               "Grow volume with creative — iterate the winners hardest; you are close.")
+    elif not hit and full:
+        scen, action = 2, ("Target NOT hit while the budget is fully spent: the cap is not being honoured (too little data/creative). "
+                           "Ask whether you should run caps at all at this spend; reduce the budget, and iterate the creative that has signal.")
+    else:
+        scen, action = 3, ("Target NOT hit AND budget not spent: double bad. Usually stop using caps for this campaign and go back to "
+                           "highest volume; the real fix is new creative. If you persist, raise the cap only up to the true target.")
+    return {"scenario": scen, "target_hit": hit, "spend_through": round(util, 3), "action": action}
 
 
 def cmd_cost_controls(a: argparse.Namespace) -> None:
     if not a.target_cpa and not a.target_roas:
         die("give --target-cpa and/or --target-roas")
-    p = cost_control_plan(a.target_cpa, a.target_roas, a.current_cpa, a.current_roas, a.daily_budget, a.aov)
-    lines = [f"## Cost-control starting values (budget pool {money(a.daily_budget)}/day)"]
-    for L in p["ladders"]:
-        is_roas = L["type"].startswith("ROAS")
+    p = cost_control_plan(a.target_cpa, a.target_roas, a.expected_spend, a.monthly_spend)
+    lines = [f"## Cost-control setup (expected spend {money(a.expected_spend)}/day)"]
+    for w in p["warnings"]:
+        lines.append(f"\n> WARNING: {w}")
+    for c in p["controls"]:
+        is_roas = c["type"].startswith("ROAS")
         fmt = num if is_roas else money
-        lines.append(f"\n### {L['type']}\n- Start: **{fmt(L['start'])}**\n- Ladder (one campaign per rung): "
-                     + ", ".join(fmt(x) for x in L["ladder"])
-                     + f"\n- Budget: {L['budget_rule']} (suggested {money(L['suggested_budget_per_campaign'])}/day per campaign)")
+        rung = f"\n- Test rungs: {', '.join(fmt(x) for x in c['test_rungs'])}" if "test_rungs" in c else ""
+        lines.append(f"\n### {c['type']}\n- Set to: **{fmt(c['value'])}**\n- Daily budget: **{money(c['budget'])}**{rung}\n- Why: {c['why']}")
     lines.append("\n### Rules\n" + "\n".join(f"- {r}" for r in p["rules"]))
     emit(p, "\n".join(lines), a.json)
+
+
+def cmd_cap_diagnose(a: argparse.Namespace) -> None:
+    r = cap_diagnose(a.cap, a.actual, a.budget, a.avg_spend, a.true_target, a.metric)
+    text = f"""## Cost-control diagnosis (7-day averages)
+Cap {a.cap} | actual {a.metric.upper()} {a.actual} | budget {money(a.budget)} | avg spend {money(a.avg_spend)} ({pct(r['spend_through'], 0)} spend-through)
+
+**Scenario {r['scenario']}** — target {'hit' if r['target_hit'] else 'NOT hit'}.
+{r['action']}
+"""
+    emit(r, text, a.json)
 
 
 # ----------------------------------------------------------------------------------------------
@@ -676,39 +751,87 @@ def cmd_cost_controls(a: argparse.Namespace) -> None:
 # ----------------------------------------------------------------------------------------------
 
 
+def zombie_buckets(rows: list[AdRow], be_cpa: float, proven_spend: float) -> dict:
+    """Sort ads into the zombie training's buckets (Blueprint 'Zombie Campaigns' 2026).
+
+    fatigued_winner   proven at/below breakeven CPA on real spend, now paused/inactive (or no longer delivering)
+    no_efficiency     got delivery (>= 3x breakeven CPA spent) but CPA above breakeven; includes 'hogs' (>= 60% of
+                      their ad set's spend while unprofitable) — move these out so the rest of the pack can breathe
+    dud               never got off the ground (< 2x breakeven CPA spent, no purchases); move ONE per ad set, pause the rest
+    keep              active and profitable: leave it where it is (never move a live winner into caps)
+    """
+    by_set: dict[str, float] = {}
+    for r in rows:
+        by_set[r.adset] = by_set.get(r.adset, 0.0) + r.spend
+    out: dict[str, list] = {"fatigued_winner": [], "no_efficiency": [], "dud": [], "keep": []}
+    duds_by_set: dict[str, list[AdRow]] = {}
+    for r in rows:
+        st = r.status.lower()
+        inactive = any(k in st for k in ("inactive", "paused", "off", "not delivering", "completed", "archived"))
+        cpa = r.cpa
+        set_share = safe_div(r.spend, by_set.get(r.adset)) or 0.0
+        item = {"ad": r.ad, "adset": r.adset, "spend": round(r.spend, 2), "purchases": r.purchases,
+                "cpa": round(cpa, 2) if cpa else None, "status": r.status or "-", "set_share": round(set_share, 3)}
+        profitable = cpa is not None and cpa <= be_cpa
+        if profitable and r.spend >= proven_spend:
+            if inactive:
+                out["fatigued_winner"].append({**item, "why": f"proven: CPA {money(cpa)} <= breakeven on {money(r.spend)}; now inactive"})
+            else:
+                out["keep"].append({**item, "why": "active and at/below breakeven: leave it in prospecting"})
+        elif r.spend >= 3 * be_cpa and not profitable:
+            hog = set_share >= 0.6 and not inactive
+            why = (f"hogs {pct(set_share, 0)} of its ad set while unprofitable: move it so the other ads get spend" if hog
+                   else f"had delivery ({money(r.spend)}) but CPA {money(cpa) if cpa else 'n/a'} > breakeven")
+            out["no_efficiency"].append({**item, "why": why, "hog": hog})
+        elif r.spend < 2 * be_cpa and r.purchases == 0:
+            duds_by_set.setdefault(r.adset, []).append(r)
+        elif profitable and not inactive:
+            out["keep"].append({**item, "why": "profitable, still building spend: leave it"})
+    for adset, ads in duds_by_set.items():
+        ads.sort(key=lambda x: ((x.ctr or 0), x.spend), reverse=True)
+        rep = ads[0]
+        out["dud"].append({"ad": rep.ad, "adset": adset, "spend": round(rep.spend, 2), "purchases": 0, "cpa": None,
+                           "status": rep.status or "-", "set_share": None,
+                           "why": f"dud pack: move this one (best CTR of {len(ads)}), pause the other {len(ads) - 1}" if len(ads) > 1
+                           else "never got off the ground"})
+    return out
+
+
 def cmd_zombie(a: argparse.Namespace) -> None:
     rows = load_csv(a.csv)
-    base = account_baseline(rows)
-    t_roas, t_cpa = a.target_roas, a.target_cpa
-    out = []
-    for r in rows:
-        reasons = []
-        hist_ok = False
-        if t_roas and r.roas is not None and r.roas >= t_roas * a.history_factor and r.spend >= a.min_spend:
-            hist_ok = True
-            reasons.append(f"proven: ROAS {r.roas:.2f} on {money(r.spend)}")
-        elif t_cpa and r.cpa is not None and r.cpa <= t_cpa / a.history_factor and r.spend >= a.min_spend:
-            hist_ok = True
-            reasons.append(f"proven: CPA {money(r.cpa)} on {money(r.spend)}")
-        stalled = "inactive" in r.status.lower() or "off" in r.status.lower() or "not delivering" in r.status.lower()
-        promising = False
-        if not hist_ok and base.get("median_ctr") and r.ctr and r.ctr >= base["median_ctr"] and r.spend < a.min_spend:
-            if base.get("cost_atc") and r.cost_atc is not None and r.cost_atc <= base["cost_atc"] * 1.1:
-                promising = True
-                reasons.append("good signals (CTR and cost/ATC at or better than account) but too little volume")
-        if hist_ok or promising:
-            out.append({"ad": r.ad, "adset": r.adset, "spend": r.spend, "roas": r.roas, "cpa": r.cpa,
-                        "type": "fatigued winner" if hist_ok else "loser-with-potential",
-                        "status": r.status or "-", "stalled": stalled, "why": "; ".join(reasons)})
-    out.sort(key=lambda x: (x["type"] != "fatigued winner", -x["spend"]))
-    lines = ["## Zombie candidates", "| Type | Ad | Ad set | Spend | ROAS | CPA | Status | Why |", "|---|---|---|---|---|---|---|---|"]
-    for o in out:
-        lines.append(f"| {o['type']} | {o['ad']} | {o['adset']} | {money(o['spend'])} | {num(o['roas'])} | {money(o['cpa'])} | {o['status']} | {o['why']} |")
-    if not out:
-        lines.append("| - | none matched | | | | | | |")
-    lines.append(f"\nProven = lifetime ROAS >= target x {a.history_factor} (or CPA <= target / {a.history_factor}) on >= {money(a.min_spend)} spend.")
-    lines.append("Relaunch them as NEW ads (fresh ad IDs, same creative) in a separate cost-capped zombie campaign; see the zombie skill for the full procedure.")
-    emit({"candidates": out}, "\n".join(lines), a.json)
+    be = a.breakeven_cpa
+    proven = a.min_spend if a.min_spend is not None else 10 * be
+    b = zombie_buckets(rows, be, proven)
+    daily = a.account_daily_spend
+    if daily:
+        budget = max(be, 0.10 * daily)
+        budget_note = (f"start ~{money(budget)}/day (between 1x breakeven CPA and ~10% of the account's {money(daily)}/day); "
+                       "expect it to float >= 20% under budget, often far less")
+    else:
+        budget = be
+        budget_note = f"start at 1x breakeven CPA = {money(be)}/day ('sneak a purchase in per day')"
+    labels = {"fatigued_winner": "Ad set 1 — Fatigued winners", "no_efficiency": "Ad set 3 — Delivery but no efficiency",
+              "dud": "Ad set 2 — Duds (one per dead pack)", "keep": "Leave in prospecting (do NOT move)"}
+    lines = [f"## Zombie campaign plan",
+             f"- Campaign: Sales, CBO, **bid strategy = Bid cap**, highest-volume campaigns untouched",
+             f"- **Bid cap = breakeven CPA {money(be)}** — nothing under, nothing over; never raise it to force spend",
+             f"- Budget: {budget_note}",
+             f"- Audience: broad, exclude purchasers/customer lists, engaged, visitors, ATC/IC; Standard attribution (incremental not allowed with bid cap)",
+             f"- Proven = lifetime spend >= {money(proven)} at CPA <= breakeven", ""]
+    for key in ("fatigued_winner", "no_efficiency", "dud", "keep"):
+        items = sorted(b[key], key=lambda x: -x["spend"])
+        lines.append(f"### {labels[key]} ({len(items)})")
+        if not items:
+            lines.append("- none\n")
+            continue
+        lines.append("| Ad | Ad set | Spend | Purch | CPA | Status | Why |\n|---|---|---|---|---|---|---|")
+        for o in items[: a.limit]:
+            lines.append(f"| {o['ad']} | {o['adset']} | {money(o['spend'])} | {num(o['purchases'], 0)} | {money(o['cpa'])} | {o['status']} | {o['why']} |")
+        lines.append("")
+    lines.append("Start small: the ~15 best fatigued winners first, evergreen creative only (no sale ads). Copy by post ID to keep "
+                 "comments/likes. Revive: if a zombie ad spends well at/below breakeven for 7-14 days, restart it where it used to win "
+                 "(or a new pack in the prospecting CBO) and optionally leave it running in zombie too.")
+    emit({"breakeven_cpa": be, "start_budget": round(budget, 2), "proven_spend": proven, "buckets": b}, "\n".join(lines), a.json)
 
 
 # ----------------------------------------------------------------------------------------------
@@ -755,27 +878,36 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--kpi-7d", type=float, required=True, help="ROAS (or CPA) over the last 7 days")
     s.add_argument("--target", type=float, required=True)
     s.add_argument("--metric", choices=["roas", "cpa"], default="roas")
-    s.add_argument("--hours-since-change", type=float, default=48)
+    s.add_argument("--kpi-14d", type=float, default=None, help="ROAS (or CPA) over the last 14 days")
+    s.add_argument("--hours-since-change", type=float, default=72)
     s.add_argument("--conv-per-day", type=float, default=None)
     s.add_argument("--json", action="store_true")
     s.set_defaults(func=cmd_scale)
 
-    c = sub.add_parser("cost-controls", help="cost cap / bid cap / ROAS goal starting values")
-    c.add_argument("--daily-budget", type=float, required=True, help="total daily budget for the capped campaigns")
-    c.add_argument("--target-cpa", type=float, default=None)
+    c = sub.add_parser("cost-controls", help="cost cap / ROAS goal / bid cap setup")
+    c.add_argument("--expected-spend", type=float, required=True, help="daily spend you expect this capped campaign to take")
+    c.add_argument("--target-cpa", type=float, default=None, help="TRUE target CPA (profitable on first purchase or LTV)")
     c.add_argument("--target-roas", type=float, default=None)
-    c.add_argument("--current-cpa", type=float, default=None)
-    c.add_argument("--current-roas", type=float, default=None)
-    c.add_argument("--aov", type=float, default=None)
+    c.add_argument("--monthly-spend", type=float, default=None, help="account monthly spend (warns under $50k)")
     c.add_argument("--json", action="store_true")
     c.set_defaults(func=cmd_cost_controls)
 
-    z = sub.add_parser("zombie", help="zombie-campaign candidates from a lifetime ad-level CSV")
-    z.add_argument("csv")
-    z.add_argument("--target-cpa", type=float, default=None)
-    z.add_argument("--target-roas", type=float, default=None)
-    z.add_argument("--min-spend", type=float, default=500.0, help="lifetime spend that counts as proven (default 500)")
-    z.add_argument("--history-factor", type=float, default=1.0, help="how far above target it must have been (default 1.0)")
+    d = sub.add_parser("cap-diagnose", help="4-scenario diagnosis of a cost-capped / ROAS-goal campaign")
+    d.add_argument("--cap", type=float, required=True, help="current cap (CPA) or ROAS goal")
+    d.add_argument("--actual", type=float, required=True, help="7-day actual CPA (or ROAS with --metric roas)")
+    d.add_argument("--budget", type=float, required=True, help="daily budget")
+    d.add_argument("--avg-spend", type=float, required=True, help="7-day average daily spend")
+    d.add_argument("--true-target", type=float, default=None, help="true target if the cap was set off-target")
+    d.add_argument("--metric", choices=["cpa", "roas"], default="cpa")
+    d.add_argument("--json", action="store_true")
+    d.set_defaults(func=cmd_cap_diagnose)
+
+    z = sub.add_parser("zombie", help="zombie campaign plan: buckets, bid cap, budget (from a long-range ad-level CSV)")
+    z.add_argument("csv", help="ad-level export over a long range (e.g. last 12-24 months) with a Delivery/status column")
+    z.add_argument("--breakeven-cpa", type=float, required=True, help="first-purchase breakeven CPA (= the bid cap)")
+    z.add_argument("--min-spend", type=float, default=None, help="lifetime spend that counts as proven (default 10x breakeven CPA)")
+    z.add_argument("--account-daily-spend", type=float, default=None, help="current account spend/day, sizes the starting budget")
+    z.add_argument("--limit", type=int, default=25, help="rows per bucket in the table")
     z.add_argument("--json", action="store_true")
     z.set_defaults(func=cmd_zombie)
     return p
