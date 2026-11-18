@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: audit-and-side-cards-knee-insole
+expected_outcome: |
+  Scores each of the 4 ads against an Andromeda 2 scorecard with specific failure reasons, ranks ad 4 as the
+  strongest, flags generic/floating claims in ads 1-2 and the weak hook/no captions in ad 3, then delivers 3+
+  side cards built on situation/moment/desire/fear rather than demographics, a named mechanism, and a concept
+  list where each concept = a side + a template.

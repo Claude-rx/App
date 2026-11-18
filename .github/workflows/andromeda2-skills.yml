@@ -1,0 +1,34 @@
+name: Andromeda 2 skills
+
+on:
+  push:
+    paths:
+      - ".claude/skills/andromeda2-*/**"
+      - "tools/andromeda2/**"
+      - ".github/workflows/andromeda2-skills.yml"
+  pull_request:
+    paths:
+      - ".claude/skills/andromeda2-*/**"
+      - "tools/andromeda2/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: a2.py unit tests
+        run: python3 -I -m unittest discover -s tools/andromeda2/tests -v
+      - name: Skill suite structure, links, evals and shared-copy sync
+        run: python3 -I tools/andromeda2/check_skills.py
+      - name: a2.py smoke run on the fixture export
+        run: |
+          python3 -I tools/andromeda2/shared/scripts/a2.py economics --aov 106 --cogs-pct 28 --shipping 6
+          python3 -I tools/andromeda2/shared/scripts/a2.py analyze tools/andromeda2/tests/fixtures/ads_export.csv --target-roas 2.0
+          python3 -I tools/andromeda2/shared/scripts/a2.py zombie tools/andromeda2/tests/fixtures/ads_lifetime.csv --breakeven-cpa 55

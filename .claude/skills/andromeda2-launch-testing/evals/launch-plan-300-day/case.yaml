@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: launch-plan-300-day
+expected_outcome: |
+  A launch plan built from computed unit economics: break-even and target CPA/ROAS, one prospecting CBO with
+  packs grouped by avatar (4-8 ads each), purchaser/customer exclusions, a small retention campaign, minimums
+  (if any) capped at 20% and 7 days, dollar-denominated kill thresholds (2x and 3x CPA), a 14-day judging window
+  at this spend, and weekly creative cadence.

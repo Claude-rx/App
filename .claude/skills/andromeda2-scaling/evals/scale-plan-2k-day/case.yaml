@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: scale-plan-2k-day
+expected_outcome: |
+  A concrete two-week scaling plan: a computed next budget step (roughly 15-30% now), cadence of 48-72 hours,
+  pre-move checks using new-segment and incremental ROAS (noting incremental 2.1 is below the 2.4 target and
+  what that implies), what to expect after the raise and hold-the-line rules, and a creative plan (more ads per
+  week, iterations of winners) running in parallel.

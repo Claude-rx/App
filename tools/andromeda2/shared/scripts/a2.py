@@ -251,11 +251,23 @@ def _norm(h: str) -> str:
 
 
 def _to_float(v: str | None) -> float | None:
+    """Parse numbers from US ("1,234.50") and EU ("1.234,50", "1234,5") exports, with currency/percent signs."""
     if v is None:
         return None
-    s = str(v).strip().replace(",", "").replace("$", "").replace("€", "").replace("£", "").replace("%", "")
-    if s in ("", "-", "--", "n/a", "na", "none"):
+    s = re.sub(r"[^\d,.\-]", "", str(v).strip())
+    if s in ("", "-", "--", ".", ","):
         return None
+    if "," in s and "." in s:
+        if s.rfind(",") > s.rfind("."):          # EU: dot thousands, comma decimal
+            s = s.replace(".", "").replace(",", ".")
+        else:                                    # US: comma thousands
+            s = s.replace(",", "")
+    elif "," in s:
+        head, _, tail = s.rpartition(",")
+        if len(tail) == 3 and s.count(",") >= 1 and all(len(g) == 3 for g in s.split(",")[1:]):
+            s = s.replace(",", "")               # 1,234 / 12,345,678 -> thousands
+        else:
+            s = s.replace(",", ".")              # 12,5 / 1234,50 -> decimal comma
     try:
         return float(s)
     except ValueError:

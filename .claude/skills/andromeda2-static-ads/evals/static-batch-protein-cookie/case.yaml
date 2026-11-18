@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: static-batch-protein-cookie
+expected_outcome: |
+  Six statics that each target one of the stated sides with a distinct angle and a different format/template
+  (e.g. us-vs-them, testimonial, statistic, native post, offer, problem-solution), each with on-image headline
+  and supporting text, layout/visual direction for 1:1 and 9:16, and an AI image prompt, without health-claim or
+  personal-attribute violations.

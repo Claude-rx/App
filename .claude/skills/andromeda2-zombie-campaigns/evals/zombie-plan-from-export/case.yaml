@@ -1,0 +1,10 @@
+schema_version: "1.1"
+name: zombie-plan-from-export
+expected_outcome: |
+  A zombie plan: separate Sales CBO with a bid cap (not cost cap) set at the $55 break-even CPA, heavy
+  exclusions of purchasers/engaged/visitors, ad sets per bucket (fatigued winners P1-V1 and P1-V2; delivery-but-
+  no-efficiency incl. the P4-V1 hog; one dud per dead pack), the still-profitable active P1-S1 left in
+  prospecting, a starting budget around $800/day (or 1x CPA up to ~10% of spend), evergreen-only, and a hands-
+  off review/revival rule.
+context:
+  scaffold_script: place-files.sh

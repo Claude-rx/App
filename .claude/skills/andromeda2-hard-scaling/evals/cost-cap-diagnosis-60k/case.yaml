@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: cost-cap-diagnosis-60k
+expected_outcome: |
+  Per-campaign diagnosis using the 4-scenario cost-cap matrix (CC1: target hit + fully spent -> raise budget;
+  CC2: cap below true target and under-spending -> raise cap toward $48; CC3: target missed + fully spent -> cut
+  budget/iterate creative or revert), caps set at the true target, budgets sized for ~80% spend-through,
+  retargeting/retention excluded from caps, no caps-vs-highest-volume test, a growth path to $100k/day with
+  creative volume and monitoring of MER/incremental.

@@ -8,12 +8,13 @@ tooling (`tools/`), and the agent setup. **Start with [docs/NEXT-COMMERCE-HANDOF
 This repo ships the [Next Commerce](https://nextcommerce.com) agent skills and MCP server
 config at **project scope**, so every Claude Code session opened here (local or cloud) loads them.
 
-### Skills — `.claude/skills/` (19)
+### Skills — `.claude/skills/` (28)
 
 | Source | Skills |
 |---|---|
 | [NextCommerceCo/skills](https://github.com/NextCommerceCo/skills) | `next-theme-figma`, `next-theme-design`, `next-theme-dev`, `next-bulk-fulfill`, `next-bulk-move`, `next-bulk-subscription`, `next-ops-scan`, `next-campaigns-setup`, `next-campaigns-create` |
 | [NextCommerceCo/campaigns-os](https://github.com/NextCommerceCo/campaigns-os) (`@nextcommerce/campaigns-os` 1.60.0) | `next-campaigns-os`, `next-campaigns-os-setup`, `next-campaigns-build`, `next-campaigns-polish`, `next-campaigns-qa`, `next-campaigns-sdk-bump`, `campaign-lifecycle-orientation`, `campaign-run-evidence`, `campaign-readback-classification`, `contribution-intake` |
+| This repo — Meta ads, [Andromeda 2 suite](tools/andromeda2/README.md) | `andromeda2-core`, `andromeda2-ad-copy`, `andromeda2-video-scripts`, `andromeda2-static-ads`, `andromeda2-launch-testing`, `andromeda2-scaling`, `andromeda2-hard-scaling`, `andromeda2-zombie-campaigns`, `andromeda2-creative-iteration` |
 
 Ask in plain language, e.g. *"Run the daily ops risk scan for my store"* or *"Bulk-fulfill these tracking numbers"*.
 Store-ops skills need a store Admin API token; they prompt for it — never commit it.
